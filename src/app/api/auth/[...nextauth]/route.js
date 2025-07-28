@@ -15,7 +15,8 @@ const authOptions = {
 
   //   after login
   callbacks: {
-    async signIn({ user, account }) {
+    async signIn({ user, account, profile }) {
+      console.log(profile)
       if (account.provider === "google") {
         const { name, email } = user;
         // console.log("ha ji")
