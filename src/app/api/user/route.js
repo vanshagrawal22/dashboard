@@ -1,9 +1,12 @@
+import connectDb from "@/database";
+import User from "@/models/user";
+import { NextResponse } from "next/server";
 
 export async function POST(req) {
   try {
     await connectDb();
-    const userData = await req.json();
-    const { name, email, googleId, picture, emailVerified, locale } = userData;
+    const { name, email, googleId, picture, emailVerified, locale } =
+      await req.json();
 
     const newUser = await User.create({
       name,
@@ -13,22 +16,20 @@ export async function POST(req) {
       emailVerified,
       locale,
     });
-
     if (newUser) {
       return NextResponse.json({
         success: true,
         data: newUser,
-        message: "User registered successfully",
+        message: "User Registered Successfully",
+      });
+    } else {
+      return NextResponse.json({
+        success: false,
+        message: "Failed to register the user please try again",
       });
     }
-
-    return NextResponse.json({
-      success: false,
-      message: "Failed to register the user. Please try again.",
-    });
   } catch (error) {
-    // Use proper error logging in production
-    console.error("Error in user registration:", error);
+    console.log(error);
     return NextResponse.json({
       success: false,
       message: "Something went wrong!",
