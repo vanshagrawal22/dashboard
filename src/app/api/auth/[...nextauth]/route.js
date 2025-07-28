@@ -3,12 +3,10 @@ import User from "@/models/user";
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
-
 const authOptions = {
   providers: [
     GoogleProvider({
-      clientId:
-        process.env.ClientId,
+      clientId: process.env.ClientId,
       clientSecret: process.env.ClientPassword,
     }),
   ],
@@ -21,7 +19,7 @@ const authOptions = {
         // console.log("ha ji")
         try {
           await connectDb();
-          
+
           const isUserExists = await User.findOne({ email });
           if (!isUserExists) {
             const res = await fetch(`${process.env.NEXTAUTH_URL}/api/user`, {
