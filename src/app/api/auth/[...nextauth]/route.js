@@ -16,9 +16,10 @@ const authOptions = {
   //   after login
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log(profile)
+      // console.log(profile)
       if (account.provider === "google") {
         const { name, email } = user;
+        const { sub, picture, email_verified, locale } = profile;
         // console.log("ha ji")
         try {
           await connectDb();
@@ -30,7 +31,14 @@ const authOptions = {
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify({ name, email }),
+              body: JSON.stringify({
+                name,
+                email,
+                googleId: sub,
+                picture,
+                emailVerified: email_verified,
+                locale,
+              }),
             });
             const result = await res.json();
             if (result.success) {
