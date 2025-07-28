@@ -4,6 +4,8 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 const authOptions = {
+  secret: process.env.NEXTAUTH_SECRET,
+
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
@@ -32,7 +34,7 @@ const authOptions = {
             const result = await res.json();
             if (result.success) {
               // console.log(user)
-              return user;
+              return true;
             }
           }
         } catch (error) {
