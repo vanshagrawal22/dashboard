@@ -39,6 +39,15 @@ export default function Header() {
         >
           {status === "authenticated" ? "Logout" : "Login"}
         </button>
+
+        <button
+          onClick={() =>
+            status === "authenticated" ? signOut() : signIn("github")
+          }
+          className="inline-flex items-center justify-center bg-black px-6 py-2 text-lg text-white font-medium tracking-wide uppercase"
+        >
+          {status === "authenticated" ? "Logout" : "Login with github"}
+        </button>
       </div>
     </header>
   );
